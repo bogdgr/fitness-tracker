@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "gb-fitness-tracker-aa747": {
+      "hosting": {
+        "fitness-tracker": [
+          "gb-fitness-tracker-aa747"
+        ]
+      }
+    }
+  }
+}
