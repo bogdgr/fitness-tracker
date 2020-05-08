@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +16,22 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.firestore.collection('availableExcercises').snapshotChanges().subscribe(result => {
-      for (let r of result) {
-        console.log(r.payload.doc.data())
-      }
-    });
+    this.firestore.collection('availableExcercises').snapshotChanges()
+      .pipe(
+        map((results: any[]) => results.map(doc => ({
+          id: doc.payload.doc.id,
+          ...doc.payload.doc.data()
+        })
+        )
+        )
+      )
+      .subscribe(result => {
+        console.log(result)
+
+        // for (let r of result) {
+        //   console.log(r.payload.doc.data())
+        // }
+      });
   }
 }
 
